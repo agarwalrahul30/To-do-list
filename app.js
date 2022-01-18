@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb+srv://admin-rahul:test123@cluster0.dtjqm.mongodb.net/todolistDB", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://<username>:<password>@cluster0.dtjqm.mongodb.net/todolistDB", {useNewUrlParser: true});
 var date = dateModule.getDate();
 
 const taskSchema = new mongoose.Schema({
