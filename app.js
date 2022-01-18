@@ -40,12 +40,12 @@ const eat = new Task({
   name: "Eat Food"
 });
 
-const tasks = [buy,make,eat];
+const defaultTasks = [buy,make,eat];
 
 app.get("/", function(req, res) {
-  Task.find(function(err, result) {
+  Task.find({}, function(err, result) {
     if(result.length === 0) {
-      Task.insertMany(tasks, function(err) {
+      Task.insertMany(defaultTasks, function(err) {
         if(!err) {
           console.log("Successfully inserted 3 tasks in root route.");
         }
@@ -63,9 +63,9 @@ app.get("/:customList", function(req, res) {
   List.findOne({name: customList}, function(err, found) {
     if(!err) {
       if(found) {
-        res.render("list", {listTitle: customList, newListItems: found.tasks});
+        res.render("list", {listTitle: found.name, newListItems: found.tasks});
       } else {
-        const newCustomList = List({
+        const newCustomList = new List({
           name: customList,
           tasks: []
         });
@@ -84,7 +84,7 @@ app.post("/", function(req, res){
   const item = req.body.newItem;
   const listName = req.body.addButton;
 
-  const newItem = Task({
+  const newItem = new Task({
     name: item
   });
 
